@@ -57,6 +57,7 @@ object Deps {
     val composeUi by lazy {"androidx.compose.ui:ui:${Versions.composeVersion}"}
     val composePreview by lazy {"androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}"}
     val material by lazy {"androidx.compose.material3:material3:${Versions.materialVersion}"}
+    val composeNav by lazy {"androidx.navigation:navigation-compose:${Versions.navigation}"}
 
     val composeTest by lazy {"androidx.compose.ui:ui-test-junit4:${Versions.composeVersion}"}
     val composeDebug by lazy {"androidx.compose.ui:ui-tooling:${Versions.composeVersion}"}
