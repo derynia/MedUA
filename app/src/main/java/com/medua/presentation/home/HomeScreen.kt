@@ -27,6 +27,7 @@ fun HomeScreen() {
             modifier = Modifier
                 .padding(top = 8.dp, bottom = 16.dp)
         )
+        CardMain()
     }
 }
 
