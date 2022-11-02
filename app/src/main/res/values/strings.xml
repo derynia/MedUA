@@ -4,7 +4,6 @@
     <string name="profile">Profile</string>
     <string name="doctors">Doctors</string>
     <string name="pills">Pills</string>
-    <string name="app_title">MedUA</string>
     <string name="analyzes">Analyzes</string>
     <string name="analyzes_desc">This is where you can view and add analyses</string>
     <string name="diagnosis">Diagnosis</string>
@@ -17,4 +16,9 @@
     <string name="medicines">Medicines</string>
     <string name="allergy">Allergy</string>
     <string name="vaccines">Vaccines</string>
+    <string name="oops_pills">no pills</string>
+    <string name="oops">Oops…</string>
+    <string name="nothing_to_take">There is nothing to take yet</string>
+    <string name="looking_glass">Looking glass</string>
+    <string name="search">Search</string>
 </resources>

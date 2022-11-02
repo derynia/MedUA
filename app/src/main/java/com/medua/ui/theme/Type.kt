@@ -1,6 +1,7 @@
 package com.medua.ui.theme
 
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -47,6 +48,28 @@ val Typography = Typography(
         fontFamily = SfProFont,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
-        letterSpacing = 0.02.sp
+        letterSpacing = 0.02.sp,
+        color = TextGrey
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = SfProFont,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp,
+        letterSpacing = 0.02.sp,
+        color = TextGrey
     )
+)
+
+val OopsStyle = TextStyle(
+    fontFamily = SfProFont,
+    fontWeight = FontWeight.Bold,
+    fontSize = 24.sp,
+    color = Blue
+)
+
+val InputFieldTextStyle = TextStyle(
+    fontFamily = SfProFont,
+    fontWeight = FontWeight.Normal,
+    fontSize = 17.sp,
+    color = Color.Black
 )

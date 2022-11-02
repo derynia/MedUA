@@ -13,5 +13,7 @@ val LightGrey = Color(0xFFDEEBFF)
 val VeryLightGreen = Color(0xFFD5FFF5)
 val VeryLightPink = Color(0xFFFFDEDE)
 val TextGrey = Color(0xFFAEAEB2)
+val DarkGrey = Color(0x1F767680)
+val SearchGrey = Color(0x3C3C434D)
 
 val Pink40 = Color(0xFF7D5260)

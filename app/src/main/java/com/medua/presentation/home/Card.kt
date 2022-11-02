@@ -12,11 +12,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.medua.R
-import com.medua.presentation.navigation.HomeScreen
-import com.medua.ui.theme.TextGrey
+import com.medua.presentation.navigation.HomeScreenMenu
 
 @Composable
-fun CardMain(homeScreenItem: HomeScreen) {
+fun CardMain(homeScreenItem: HomeScreenMenu) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +54,6 @@ fun CardMain(homeScreenItem: HomeScreen) {
                 )
                 Text(
                     text = stringResource(id = homeScreenItem.description),
-                    color = TextGrey,
                     style = MaterialTheme.typography.bodySmall
                 )
             }
