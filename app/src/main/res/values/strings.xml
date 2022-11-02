@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">MedUA</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="doctors">Doctors</string>
+    <string name="pills">Pills</string>
+    <string name="app_title">MedUA</string>
+    <string name="analyzes">Analyzes</string>
+    <string name="analyzes_desc">This is where you can view and add analyses</string>
+    <string name="diagnosis">Diagnosis</string>
+    <string name="diagnosis_desc">This is where you can view and add analyses</string>
+    <string name="doctors_visit_desc">This is where you can view and add doctors visit</string>
+    <string name="medicines_desc">This is where you can view and add medicines</string>
+    <string name="allergy_desc">This is where you can view and add allergies</string>
+    <string name="vaccination_desc">This is where you can view and add vaccinations</string>
+    <string name="doctors_visit">Doctor\'s visits</string>
+    <string name="medicines">Medicines</string>
+    <string name="allergy">Allergy</string>
+    <string name="vaccines">Vaccines</string>
+</resources>

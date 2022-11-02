@@ -3,10 +3,7 @@ package com.medua.presentation.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,10 +12,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.medua.R
-import com.medua.ui.theme.Pink
+import com.medua.presentation.navigation.HomeScreen
+import com.medua.ui.theme.TextGrey
 
 @Composable
-fun CardMain() {
+fun CardMain(homeScreenItem: HomeScreen) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,13 +29,17 @@ fun CardMain() {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(start = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .padding(start = 16.dp, top = 10.dp),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.Start
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.analyzes),
+                painter = painterResource(id = homeScreenItem.iconId),
                 modifier = Modifier
-                    .background(color = Pink, shape = RoundedCornerShape(16.dp))
+                    .background(
+                        color = homeScreenItem.backgroundColor,
+                        shape = RoundedCornerShape(16.dp)
+                    )
                     .width(88.dp)
                     .height(88.dp),
                 contentDescription = stringResource(
@@ -45,6 +47,18 @@ fun CardMain() {
                 ),
                 tint = Color.Unspecified
             )
+            Column(modifier = Modifier.padding(start = 28.dp, end = 20.dp)) {
+                Text(
+                    text = stringResource(id = homeScreenItem.title),
+                    color = Color.Black,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = stringResource(id = homeScreenItem.description),
+                    color = TextGrey,
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
         }
     }
 }
