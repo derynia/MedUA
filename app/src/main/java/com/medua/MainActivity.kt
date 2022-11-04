@@ -100,6 +100,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     MedUATheme {
-//        Greeting("Android")
+
     }
 }

@@ -31,3 +31,15 @@ fun OopsBox(@DrawableRes iconId: Int, @StringRes contentDescription: Int, @Strin
         text = stringResource(text), style = MaterialTheme.typography.bodyMedium
     )
 }
+
+@Composable
+fun OopsBoxWithButton(
+    @DrawableRes iconId: Int,
+    @StringRes contentDescription: Int,
+    @StringRes text: Int,
+    @StringRes buttonCaption: Int,
+    onClick: () -> Unit
+) {
+    OopsBox(iconId = iconId, contentDescription = contentDescription, text = text)
+    BasicButton(modifier = Modifier.padding(top = 101.dp), caption = buttonCaption, onClick)
+}

@@ -1,5 +1,7 @@
-package com.medua.presentation.pills
+package com.medua.presentation.home
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,12 +14,15 @@ import com.medua.presentation.basic.SearchField
 import com.medua.presentation.basic.TitleText
 
 @Composable
-fun PillsScreen() {
+fun AdditionalHomeScreen(
+    @StringRes title: Int,
+    @StringRes caption: Int, @DrawableRes icon: Int, onClick: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TitleText(title = R.string.pills)
+        TitleText(title = title)
         SearchField()
         Column(
             modifier = Modifier.fillMaxSize(),
