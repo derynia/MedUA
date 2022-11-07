@@ -17,7 +17,7 @@ fun PillsScreen() {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        TitleText(title = R.string.pills)
+        TitleText(title = R.string.pills, Modifier)
         SearchField()
         Column(
             modifier = Modifier.fillMaxSize(),

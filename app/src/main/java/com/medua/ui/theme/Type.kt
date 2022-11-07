@@ -17,9 +17,9 @@ val SfProFont = FontFamily(
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = SfProFont,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 17.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
@@ -38,7 +38,7 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = SfProFont,
         fontWeight = FontWeight.Medium,
         fontSize = 11.sp,
         lineHeight = 16.sp,
@@ -59,6 +59,7 @@ val Typography = Typography(
         color = TextGrey
     )
 )
+
 
 val OopsStyle = TextStyle(
     fontFamily = SfProFont,

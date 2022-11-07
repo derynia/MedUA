@@ -7,28 +7,53 @@ import com.medua.R
 import com.medua.ui.theme.*
 
 sealed class HomeScreenMenu(
+    val route: String,
     @DrawableRes val iconId: Int,
     val backgroundColor: Color,
     @StringRes val title: Int,
     @StringRes val description: Int
 ) {
     object Analyzes :
-        HomeScreenMenu(R.drawable.analyzes, Pink, R.string.analyzes, R.string.analyzes_desc)
+        HomeScreenMenu("analyzes", R.drawable.analyzes, Pink, R.string.analyzes, R.string.analyzes_desc)
 
     object Diagnosis :
-        HomeScreenMenu(R.drawable.diagnosis, LightGreen, R.string.diagnosis, R.string.diagnosis_desc)
+        HomeScreenMenu(
+            "diagnosis",
+            R.drawable.diagnosis,
+            LightGreen,
+            R.string.diagnosis,
+            R.string.diagnosis_desc
+        )
 
     object DoctorsVisit :
-        HomeScreenMenu(R.drawable.doctors_visit, LightYellow, R.string.doctors_visit, R.string.diagnosis_desc)
+        HomeScreenMenu(
+            "doctorsvisit",
+            R.drawable.doctors_visit,
+            LightYellow,
+            R.string.doctors_visit,
+            R.string.diagnosis_desc
+        )
 
     object Medicines :
-        HomeScreenMenu(R.drawable.medicines, LightGrey, R.string.medicines, R.string.medicines_desc)
+        HomeScreenMenu("medicines", R.drawable.medicines, LightGrey, R.string.medicines, R.string.medicines_desc)
 
     object Allergy :
-        HomeScreenMenu(R.drawable.allergies, VeryLightGreen, R.string.allergy, R.string.allergy_desc)
+        HomeScreenMenu(
+            "allergies",
+            R.drawable.allergies,
+            VeryLightGreen,
+            R.string.allergy,
+            R.string.allergy_desc
+        )
 
     object Vaccinations :
-        HomeScreenMenu(R.drawable.vaccines, VeryLightPink, R.string.vaccines, R.string.vaccination_desc)
+        HomeScreenMenu(
+            "vaccinations",
+            R.drawable.vaccines,
+            VeryLightPink,
+            R.string.vaccine,
+            R.string.vaccination_desc
+        )
 }
 
 val homeItems = listOf(

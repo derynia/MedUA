@@ -11,14 +11,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.medua.R
 import com.medua.presentation.basic.TitleText
 import com.medua.presentation.navigation.HomeScreenMenu
 import com.medua.presentation.navigation.homeItems
 
 @Composable
-fun HomeScreen() {
-    TitleText(title = R.string.app_name)
+fun HomeScreen(navController: NavHostController) {
+    TitleText(title = R.string.app_name, Modifier)
     Column(
         modifier = Modifier
             .fillMaxHeight()
@@ -26,25 +27,21 @@ fun HomeScreen() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        MenuList(menuItems = homeItems)
+        MenuList(navController = navController, menuItems = homeItems)
     }
 }
 
 @Composable
-fun MenuList(menuItems: List<HomeScreenMenu>) {
+fun MenuList(navController: NavHostController, menuItems: List<HomeScreenMenu>) {
     LazyColumn {
         items(menuItems) {
-            CardMain(homeScreenItem = it) { navigateToScreen(it) }
+            CardMain(homeScreenItem = it) { navController.navigate(it.route) }
         }
     }
-}
-
-fun navigateToScreen(screenItem: HomeScreenMenu) {
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    HomeScreen()
+    //HomeScreen()
 }

@@ -16,7 +16,7 @@ import com.medua.presentation.navigation.HomeScreenMenu
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardMain(homeScreenItem: HomeScreenMenu, onClick : () -> Unit) {
+fun CardMain(homeScreenItem: HomeScreenMenu, onItemClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -24,7 +24,7 @@ fun CardMain(homeScreenItem: HomeScreenMenu, onClick : () -> Unit) {
             .padding(bottom = 20.dp, start = 16.dp, end = 16.dp),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary),
-        onClick = onClick
+        onClick = onItemClick
     ) {
         Row(
             modifier = Modifier

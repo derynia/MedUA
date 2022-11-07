@@ -12,12 +12,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TitleText(@StringRes title: Int) {
+fun TitleText(@StringRes title: Int, modifier: Modifier) {
     Text(
         text = stringResource(title),
         style = MaterialTheme.typography.titleMedium,
         textAlign = TextAlign.Center,
-        modifier = Modifier
+        modifier = modifier
             .padding(top = 8.dp, bottom = 16.dp)
             .fillMaxWidth()
     )
