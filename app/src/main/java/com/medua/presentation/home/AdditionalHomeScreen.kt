@@ -65,9 +65,7 @@ fun AdditionalHomeScreen(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .weight(1f)
-                    .clickable {
-
-                    })
+                    .clickable {})
         }
 
         SearchField()

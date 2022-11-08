@@ -31,4 +31,5 @@
     <string name="add_allergies">Add allergies</string>
     <string name="back">Back</string>
     <string name="plus">plus</string>
+    <string name="doctors_desc">There are no doctors here. Add them so they are always by your side</string>
 </resources>

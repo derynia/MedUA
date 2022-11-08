@@ -28,7 +28,9 @@ fun OopsBox(@DrawableRes iconId: Int, @StringRes contentDescription: Int, @Strin
         style = OopsStyle,
     )
     Text(
-        text = stringResource(text), style = MaterialTheme.typography.bodyMedium
+        text = stringResource(text),
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier.padding(start = 86.dp, end = 86.dp)
     )
 }
 
