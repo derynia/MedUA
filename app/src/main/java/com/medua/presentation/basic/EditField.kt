@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.medua.R
 import com.medua.ui.theme.InputFieldTextStyle
 import com.medua.ui.theme.TextGrey
+import com.medua.ui.theme.SearchGrey
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +66,8 @@ fun SearchField() {
                 colors = TextFieldDefaults.textFieldColors(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
+                    disabledIndicatorColor = Color.Transparent,
+                    containerColor = SearchGrey
                 )
             )
         }

@@ -11,13 +11,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Blue,
-    secondary = White,
-    tertiary = Pink80,
-    background = Main
-)
-
 private val LightColorScheme = lightColorScheme(
     primary = Blue,
     secondary = White,
@@ -35,14 +28,6 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
-//val navItemsColor = NavigationBarItemColors(
-//    selectedIconColor = Color.Blue,
-//    selectedTextColor = Color.Blue,
-//    selectedIndicatorColor = Color.Transparent,
-//    unselectedIconColor = Color.Blue,
-//    unselectedTextColor = Color.Blue
-//)
-
 @Composable
 fun MedUATheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -55,7 +40,7 @@ fun MedUATheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> DarkColorScheme
+        darkTheme -> LightColorScheme
         else -> LightColorScheme
     }
     val view = LocalView.current

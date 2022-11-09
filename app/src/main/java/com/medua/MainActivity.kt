@@ -12,6 +12,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -86,7 +88,8 @@ fun BottomBar(navController: NavHostController, bottomBarState: MutableState<Boo
                         icon = {
                             Icon(
                                 painter = painterResource(if (selected) screen.selectedIconId else screen.iconId),
-                                contentDescription = stringResource(screen.resourceId)
+                                contentDescription = stringResource(screen.resourceId),
+                                modifier = Modifier.align(alignment = Alignment.Top)
                             )
                         },
                         label = { Text(stringResource(screen.resourceId)) },

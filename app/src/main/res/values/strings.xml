@@ -32,4 +32,8 @@
     <string name="back">Back</string>
     <string name="plus">plus</string>
     <string name="doctors_desc">There are no doctors here. Add them so they are always by your side</string>
+    <string name="drink_it_all">Drink it all</string>
+    <string name="morning">Morning</string>
+    <string name="dinner">Dinner</string>
+    <string name="evening">Evening</string>
 </resources>
