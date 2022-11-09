@@ -1,5 +1,6 @@
 package com.medua.presentation.pills
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -61,6 +62,7 @@ fun PillsList() {
                 modifier = Modifier
                     .padding(end = 16.dp, top = 8.dp)
                     .weight(3f)
+                    .clickable {  }
             )
         }
         SearchField()
@@ -95,22 +97,34 @@ fun FilterTabs() {
     ) {
         tabData.forEachIndexed { index, text ->
             val selected = tabIndex == index
+            val dataAlign = when (index) {
+                0 -> Alignment.Start
+                tabData.size-1 -> Alignment.End
+                else -> Alignment.CenterHorizontally
+            }
+
             Tab(
                 selected = selected,
                 onClick = { tabIndex = index },
             ) {
-                Text(
-                    text = text,
-                    color = if (selected) MaterialTheme.colorScheme.primary else FilterTextColor,
-                )
-                Icon(
-                    painter = painterResource(
-                        id = if (selected) R.drawable.select_rectangle else R.drawable.unselect_rectangle
-                    ),
-                    modifier = Modifier.padding(top = 10.dp),
-                    contentDescription = "",
-                    tint = Color.Unspecified,
-                )
+                Column(
+                    Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = text,
+                        modifier = Modifier.align(dataAlign),
+                        color = if (selected) MaterialTheme.colorScheme.primary else FilterTextColor,
+                    )
+                    Icon(
+                        painter = painterResource(
+                            id = if (selected) R.drawable.select_rectangle else R.drawable.unselect_rectangle
+                        ),
+                        modifier = Modifier.padding(top = 10.dp).align(dataAlign),
+                        contentDescription = "",
+                        tint = Color.Unspecified,
+                    )
+                }
             }
         }
     }
