@@ -15,5 +15,7 @@ val VeryLightPink = Color(0xFFFFDEDE)
 val TextGrey = Color(0xFFAEAEB2)
 val SearchGrey = Color(0x1F767680)
 val FilterTextColor = Color(0x998E8E93)
+val Green = Color(0xFF92E3A9)
+val LightRed = Color(0xFFED6262)
 
 val Pink40 = Color(0xFF7D5260)

@@ -36,4 +36,8 @@
     <string name="morning">Morning</string>
     <string name="dinner">Dinner</string>
     <string name="evening">Evening</string>
+    <string name="times">Times</string>
+    <string name="checkmark">checkmark</string>
+    <string name="already_accepted">Already accepted</string>
+    <string name="forgot_to_accept">Forgot to accept</string>
 </resources>

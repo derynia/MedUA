@@ -2,6 +2,8 @@ package com.medua.presentation.pills
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -13,9 +15,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.medua.R
+import com.medua.data.mockList
 import com.medua.presentation.basic.OopsBox
 import com.medua.presentation.basic.SearchField
 import com.medua.presentation.basic.TitleText
+import com.medua.presentation.home.CardPills
 import com.medua.ui.theme.FilterTextColor
 
 @Composable
@@ -62,7 +66,7 @@ fun PillsList() {
                 modifier = Modifier
                     .padding(end = 16.dp, top = 8.dp)
                     .weight(3f)
-                    .clickable {  }
+                    .clickable { }
             )
         }
         SearchField()
@@ -71,6 +75,11 @@ fun PillsList() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             FilterTabs()
+            LazyColumn {
+                items(mockList) {
+                    CardPills(pillToTake = it) {}
+                }
+            }
         }
     }
 }
@@ -120,7 +129,9 @@ fun FilterTabs() {
                         painter = painterResource(
                             id = if (selected) R.drawable.select_rectangle else R.drawable.unselect_rectangle
                         ),
-                        modifier = Modifier.padding(top = 10.dp).align(dataAlign),
+                        modifier = Modifier
+                            .padding(top = 10.dp)
+                            .align(dataAlign),
                         contentDescription = "",
                         tint = Color.Unspecified,
                     )
@@ -133,5 +144,5 @@ fun FilterTabs() {
 @Preview
 @Composable
 fun FilterTabsPreview() {
-    FilterTabs()
+    PillsList()
 }

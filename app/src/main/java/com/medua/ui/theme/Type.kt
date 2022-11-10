@@ -74,3 +74,11 @@ val InputFieldTextStyle = TextStyle(
     fontSize = 17.sp,
     color = Color.Black
 )
+
+val PillsTextStyle = TextStyle(
+    fontFamily = SfProFont,
+    fontWeight = FontWeight.Normal,
+    fontSize = 15.sp,
+    lineHeight = 20.sp,
+    color = Color.Black
+)
