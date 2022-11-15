@@ -115,6 +115,7 @@ fun CardPills(pillToTake: PillToTake, onItemClick: () -> Unit) {
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
+                    modifier = Modifier.padding(6.dp),
                     painter = painterResource(id = if (pillToTake.taken) R.drawable.checkmark else R.drawable.xmark),
                     contentDescription = stringResource(R.string.checkmark)
                 )
@@ -133,5 +134,5 @@ fun CardPills(pillToTake: PillToTake, onItemClick: () -> Unit) {
 @Preview
 @Composable
 fun CardPreview() {
-    CardPills(pillToTake = PillToTake(PillType("Aspirin"), 3, 1f, true), {})
+    CardPills(pillToTake = PillToTake(1, PillType("Aspirin"), 3, 1f, false), {})
 }

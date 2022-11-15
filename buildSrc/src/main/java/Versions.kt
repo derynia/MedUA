@@ -6,7 +6,8 @@ object Versions {
     // Compose
     const val activityComposeVersion = "1.6.1"
     const val composeVersion = "1.3.0"
-    const val materialVersion = "1.0.0"
+    const val material3Version = "1.0.1"
+    const val materialVersion = "1.3.1"
 
     // Tests
     const val junit = "4.13.2"

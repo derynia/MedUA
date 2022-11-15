@@ -56,7 +56,8 @@ object Deps {
     val activityCompose by lazy {"androidx.activity:activity-compose:${Versions.activityComposeVersion}"}
     val composeUi by lazy {"androidx.compose.ui:ui:${Versions.composeVersion}"}
     val composePreview by lazy {"androidx.compose.ui:ui-tooling-preview:${Versions.composeVersion}"}
-    val material by lazy {"androidx.compose.material3:material3:${Versions.materialVersion}"}
+    val material3 by lazy {"androidx.compose.material3:material3:${Versions.material3Version}"}
+    val material by lazy {"androidx.compose.material:material:${Versions.materialVersion}"}
     val composeNav by lazy {"androidx.navigation:navigation-compose:${Versions.navigation}"}
 
     val composeTest by lazy {"androidx.compose.ui:ui-test-junit4:${Versions.composeVersion}"}

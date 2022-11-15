@@ -55,6 +55,7 @@ dependencies {
     implementation(Deps.activityCompose)
     implementation(Deps.composeUi)
     implementation(Deps.composePreview)
+    implementation(Deps.material3)
     implementation(Deps.material)
     implementation(Deps.composeNav)
 

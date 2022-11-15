@@ -40,4 +40,6 @@
     <string name="checkmark">checkmark</string>
     <string name="already_accepted">Already accepted</string>
     <string name="forgot_to_accept">Forgot to accept</string>
+    <string name="i_forgot">I forgot</string>
+    <string name="accepted">Accepted</string>
 </resources>
