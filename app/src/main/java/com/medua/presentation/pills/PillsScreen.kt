@@ -1,9 +1,7 @@
 package com.medua.presentation.pills
 
-import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,25 +22,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.medua.R
 import com.medua.data.PillToTake
-import com.medua.data.mockList
 import com.medua.presentation.basic.OopsBox
 import com.medua.presentation.basic.SearchField
 import com.medua.presentation.basic.TitleText
-import com.medua.presentation.home.CardPills
+import com.medua.presentation.home.DraggableCard
 import com.medua.ui.theme.ButtonGreen
 import com.medua.ui.theme.FilterTextColor
 import com.medua.ui.theme.LightRed
 import com.medua.ui.theme.White
+import com.medua.utils.dp
+
+const val CARD_OFFSET = 105f
 
 @Composable
-fun PillsScreen() {
+fun PillsScreen(viewModel: PillsViewModel) {
+    val pillsToTake by viewModel.pillsToTakeData.collectAsState()
+    val revealedPills by viewModel.revealedPillsToTakeData.collectAsState()
     //EmptyPillsScreen()
-    PillsList()
+    PillsList(pillsToTake, revealedPills, viewModel)
 }
 
 @Composable
@@ -65,16 +66,7 @@ fun EmptyPillsScreen() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PillsList() {
-    val pillsList = remember {
-        mutableStateListOf<PillToTake>()
-    }
-    mockList.map { pillsList.add(it) }
-    val directions = setOf(
-        DismissDirection.StartToEnd,
-        DismissDirection.EndToStart
-    )
-
+fun PillsList(pillsList: List<PillToTake>, revealedPills: List<Int>, viewModel: PillsViewModel) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -103,54 +95,33 @@ fun PillsList() {
         ) {
             FilterTabs()
             LazyColumn {
-                items(pillsList, { pillsList: PillToTake -> pillsList.id }) {
-                    val dismissState = rememberDismissState(initialValue = DismissValue.Default)
-
-                    SwipeToDismiss(
-                        state = dismissState,
-                        modifier = Modifier.fillMaxWidth().align(Alignment.End),
-                        directions = directions,
-                        background = {
-                            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
-                            val scale by animateFloatAsState(
-                                if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-                            )
-
-                            val alignment = when (direction) {
-                                DismissDirection.EndToStart -> Alignment.CenterEnd
-                                DismissDirection.StartToEnd -> Alignment.CenterStart
-                            }
-
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(Color.Transparent)
-                                    .padding(start = 12.dp, end = 12.dp),
-                                contentAlignment = alignment
-                            ) {
-                                when (direction) {
-                                    DismissDirection.StartToEnd -> PillsButton(
-                                        R.drawable.checkmark,
-                                        R.string.accepted,
-                                        Modifier
-                                            .width(106.dp)
-                                            .padding(start = 12.dp, end = 12.dp, top = 16.dp),
-                                        ButtonGreen
-                                    ) {}
-                                    DismissDirection.EndToStart -> PillsButton(
-                                        R.drawable.xmark,
-                                        R.string.i_forgot,
-                                        Modifier
-                                            .width(88.dp)
-                                            .padding(start = 12.dp, end = 12.dp, top = 16.dp),
-                                        LightRed
-                                    ) {}
-                                }
-                            }
-                        },
-                        dismissContent = {
-                            CardPills(pillToTake = it) {}
-                        })
+                items(pillsList, PillToTake::id) {
+                    Box(Modifier.fillMaxWidth()) {
+                        PillsButton(
+                            R.drawable.checkmark,
+                            R.string.accepted,
+                            Modifier
+                                .width(106.dp)
+                                .padding(start = 17.dp, end = 12.dp, top = 16.dp),
+                            ButtonGreen
+                        ) {}
+                        PillsButton(
+                            R.drawable.xmark,
+                            R.string.i_forgot,
+                            Modifier
+                                .width(88.dp)
+                                .padding(start = 12.dp, end = 17.dp, top = 16.dp)
+                                .align(alignment = Alignment.TopEnd),
+                            LightRed
+                        ) {}
+                        DraggableCard<PillToTake>(
+                            item = it,
+                            isRevealed = revealedPills.contains(it.id),
+                            cardOffset = CARD_OFFSET.dp(),
+                            onExpand = { viewModel.onItemExpanded(it.id) },
+                            onCollapse = { viewModel.onItemCollapsed(it.id) }
+                        )
+                    }
                 }
             }
         }
@@ -255,21 +226,5 @@ fun PillsButton(
                 maxLines = 1
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun FilterTabsPreview() {
-    PillsList()
-}
-
-@Preview
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
-@Composable
-fun Button() {
-    Column() {
-        PillsButton(R.drawable.xmark, R.string.i_forgot, Modifier.width(88.dp), LightRed) {}
-        PillsButton(R.drawable.checkmark, R.string.accepted, Modifier.width(106.dp), ButtonGreen) {}
     }
 }

@@ -12,10 +12,11 @@ import com.medua.presentation.doctors.DoctorsScreen
 import com.medua.presentation.home.AdditionalHomeScreen
 import com.medua.presentation.home.HomeScreen
 import com.medua.presentation.pills.PillsScreen
+import com.medua.presentation.pills.PillsViewModel
 import com.medua.presentation.profile.ProfileScreen
 
 @Composable
-fun NavGraph(navController: NavHostController, innerPadding: PaddingValues) {
+fun NavGraph(navController: NavHostController, innerPadding: PaddingValues, viewModel: PillsViewModel) {
     NavHost(
         navController,
         startDestination = Screen.Home.route,
@@ -23,7 +24,7 @@ fun NavGraph(navController: NavHostController, innerPadding: PaddingValues) {
     ) {
         composable(Screen.Home.route) { HomeScreen(navController) }
         composable(Screen.Doctors.route) { DoctorsScreen() }
-        composable(Screen.Pills.route) { PillsScreen() }
+        composable(Screen.Pills.route) { PillsScreen(viewModel) }
         composable(Screen.Profile.route) { ProfileScreen() }
         composable(HomeScreenMenu.DoctorsVisit.route) {
             AdditionalHomeScreen(

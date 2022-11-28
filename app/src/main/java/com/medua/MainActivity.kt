@@ -3,6 +3,7 @@ package com.medua
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -25,14 +26,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.medua.presentation.navigation.NavGraph
 import com.medua.presentation.navigation.navItems
+import com.medua.presentation.pills.PillsViewModel
 import com.medua.ui.theme.MedUATheme
 
 class MainActivity : ComponentActivity() {
+    private val pillsViewModel by viewModels<PillsViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MedUATheme {
-                MedUAApp()
+                MedUAApp(pillsViewModel)
             }
         }
     }
@@ -50,7 +54,7 @@ private fun getNavItemColors(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MedUAApp() {
+fun MedUAApp(pillsViewModel: PillsViewModel) {
     val navController = rememberNavController()
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
 
@@ -64,7 +68,7 @@ fun MedUAApp() {
             BottomBar(navController, bottomBarState)
         }
     ) { innerPadding ->
-        NavGraph(navController = navController, innerPadding = innerPadding)
+        NavGraph(navController = navController, innerPadding = innerPadding, pillsViewModel)
     }
 }
 
