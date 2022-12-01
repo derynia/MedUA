@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material3.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -26,24 +25,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.medua.R
 import com.medua.data.PillToTake
+import com.medua.data.RevealStatus
 import com.medua.presentation.basic.OopsBox
 import com.medua.presentation.basic.SearchField
 import com.medua.presentation.basic.TitleText
-import com.medua.presentation.home.DraggableCard
+import com.medua.presentation.home.PillsCard
 import com.medua.ui.theme.ButtonGreen
 import com.medua.ui.theme.FilterTextColor
 import com.medua.ui.theme.LightRed
 import com.medua.ui.theme.White
 import com.medua.utils.dp
+import kotlinx.coroutines.flow.collectLatest
 
 const val CARD_OFFSET = 105f
 
 @Composable
 fun PillsScreen(viewModel: PillsViewModel) {
-    val pillsToTake by viewModel.pillsToTakeData.collectAsState()
-    val revealedPills by viewModel.revealedPillsToTakeData.collectAsState()
     //EmptyPillsScreen()
-    PillsList(pillsToTake, revealedPills, viewModel)
+    PillsList(viewModel)
 }
 
 @Composable
@@ -64,9 +63,11 @@ fun EmptyPillsScreen() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun PillsList(pillsList: List<PillToTake>, revealedPills: List<Int>, viewModel: PillsViewModel) {
+fun PillsList(viewModel: PillsViewModel) {
+    val pillsToTake by viewModel.pillsToTakeData.collectAsState()
+    val movedPills by viewModel.movedPillsToTakeData.collectAsState()
+
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -95,7 +96,7 @@ fun PillsList(pillsList: List<PillToTake>, revealedPills: List<Int>, viewModel: 
         ) {
             FilterTabs()
             LazyColumn {
-                items(pillsList, PillToTake::id) {
+                items(pillsToTake, PillToTake::id) {
                     Box(Modifier.fillMaxWidth()) {
                         PillsButton(
                             R.drawable.checkmark,
@@ -114,12 +115,13 @@ fun PillsList(pillsList: List<PillToTake>, revealedPills: List<Int>, viewModel: 
                                 .align(alignment = Alignment.TopEnd),
                             LightRed
                         ) {}
-                        DraggableCard<PillToTake>(
-                            item = it,
-                            isRevealed = revealedPills.contains(it.id),
+                        PillsCard(
+                            pillToTake = it,
+                            revealStatus = movedPills.firstOrNull {lookItem -> lookItem.first == it}?.second ?: RevealStatus.None,
                             cardOffset = CARD_OFFSET.dp(),
-                            onExpand = { viewModel.onItemExpanded(it.id) },
-                            onCollapse = { viewModel.onItemCollapsed(it.id) }
+                            onMoveLeft = { viewModel.onItemMoved(it, RevealStatus.Left) },
+                            onMoveRight = { viewModel.onItemMoved(it, RevealStatus.Right) },
+                            onCollapsed = { viewModel.onCollapsed(it) }
                         )
                     }
                 }

@@ -3,6 +3,8 @@ package com.medua.presentation.pills
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.medua.data.PillToTake
+import com.medua.data.RevealStatus
+import com.medua.data.RevealStatus.Left.getOppositeDirection
 import com.medua.data.mockList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +21,8 @@ class PillsViewModel @Inject constructor(
     private val pillsToTake = MutableStateFlow(listOf<PillToTake>())
     val pillsToTakeData: StateFlow<List<PillToTake>> = pillsToTake
 
-    private val revealedPillsToTake = MutableStateFlow(listOf<Int>())
-    val revealedPillsToTakeData: StateFlow<List<Int>> = revealedPillsToTake
+    private val movedPillsToTake = MutableStateFlow(listOf<Pair<PillToTake, RevealStatus>>())
+    val movedPillsToTakeData: StateFlow<List<Pair<PillToTake, RevealStatus>>> = movedPillsToTake
 
     init {
         fetchData()
@@ -34,17 +36,22 @@ class PillsViewModel @Inject constructor(
         }
     }
 
-    fun onItemExpanded(pillId: Int) {
-        if (revealedPillsToTake.value.contains(pillId)) return
-        revealedPillsToTake.value = revealedPillsToTake.value.toMutableList().also { list ->
-            list.add(pillId)
+    fun onItemMoved(pillToTake: PillToTake, revealStatus: RevealStatus) {
+        if (movedPillsToTake.value.contains(pillToTake to revealStatus)) return
+        movedPillsToTake.value = movedPillsToTake.value.toMutableList().also { list ->
+            list.remove(pillToTake to revealStatus.getOppositeDirection())
+            if (revealStatus != RevealStatus.None) {
+                list.add(pillToTake to revealStatus)
+            }
         }
     }
 
-    fun onItemCollapsed(pillId: Int) {
-        if (!revealedPillsToTake.value.contains(pillId)) return
-        revealedPillsToTake.value = revealedPillsToTake.value.toMutableList().also { list ->
-            list.remove(pillId)
+    fun onCollapsed(pillToTake: PillToTake) {
+        val item = movedPillsToTake.value.firstOrNull { lookItem -> lookItem.first == pillToTake }
+            ?: return
+        movedPillsToTake.value = movedPillsToTake.value.toMutableList().also { list ->
+            list.remove(item)
         }
     }
+
 }

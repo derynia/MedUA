@@ -5,13 +5,14 @@ data class PillToTake(
     val pillType: PillType,
     val timesADay: Int,
     val qty: Float,
-    val taken: Boolean
+    val taken: Boolean,
+    var revealStatus : RevealStatus
 )
 
 //Test
 val mockList = listOf<PillToTake>(
-    PillToTake(1, PillType("Aspirin"), 3, 1f, true),
-    PillToTake(2, PillType("Ceftriaxon"), 2, 1.5f, false),
-    PillToTake(3, PillType("Dexametazone"), 1, 2f, true),
-    PillToTake(4, PillType("Vitamin C"), 3, 1f, false)
+    PillToTake(1, PillType("Aspirin"), 3, 1f, true, RevealStatus.None),
+    PillToTake(2, PillType("Ceftriaxon"), 2, 1.5f, false, RevealStatus.None),
+    PillToTake(3, PillType("Dexametazone"), 1, 2f, true, RevealStatus.None),
+    PillToTake(4, PillType("Vitamin C"), 3, 1f, false, RevealStatus.None)
 )

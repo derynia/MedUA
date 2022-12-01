@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.medua.R
 import com.medua.data.PillToTake
+import com.medua.data.RevealStatus
 import com.medua.presentation.navigation.HomeScreenMenu
 import com.medua.ui.theme.Green
 import com.medua.ui.theme.LightRed
@@ -82,17 +83,17 @@ fun CardMain(homeScreenItem: HomeScreenMenu, onItemClick: () -> Unit) {
 
 @SuppressLint("UnusedTransitionTargetStateParameter")
 @Composable
-fun <T> DraggableCard(
-    item: T,
-    isRevealed: Boolean,
+fun PillsCard(
+    pillToTake: PillToTake,
+    revealStatus: RevealStatus,
     cardOffset: Float,
-    onExpand: () -> Unit,
-    onCollapse: () -> Unit,
-//    card: (T, Unit, Unit, Float) -> Unit
+    onMoveLeft: () -> Unit,
+    onMoveRight: () -> Unit,
+    onCollapsed: () -> Unit
 ) {
     val transitionState = remember {
-        MutableTransitionState(isRevealed).apply {
-            targetState = !isRevealed
+        MutableTransitionState(revealStatus).apply {
+            targetState = RevealStatus.Right
         }
     }
     val transition = updateTransition(transitionState, "cardTransition")
@@ -100,19 +101,14 @@ fun <T> DraggableCard(
     val offsetTransition by transition.animateFloat(
         label = "cardOffsetTransition",
         transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
-        targetValueByState = { if (isRevealed) cardOffset else 0f }
+        targetValueByState = {
+            when (it) {
+                RevealStatus.Right -> cardOffset
+                RevealStatus.Left -> -cardOffset
+                else -> 0f
+            }
+        }
     )
-    CardPills(item as PillToTake, onExpand, onCollapse, offsetTransition)
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CardPills(
-    pillToTake: PillToTake,
-    onExpand: () -> Unit,
-    onCollapse: () -> Unit,
-    offsetTransition: Float
-) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,8 +118,9 @@ fun CardPills(
             .pointerInput(Unit) {
                 detectHorizontalDragGestures { _, dragAmount ->
                     when {
-                        dragAmount >= MIN_DRAG_AMOUNT -> onExpand()
-                        dragAmount < -MIN_DRAG_AMOUNT -> onCollapse()
+                        dragAmount >= MIN_DRAG_AMOUNT -> onMoveRight()
+                        -dragAmount >= MIN_DRAG_AMOUNT -> onMoveLeft()
+                        dragAmount < -MIN_DRAG_AMOUNT -> onCollapsed()
                     }
                 }
             },
