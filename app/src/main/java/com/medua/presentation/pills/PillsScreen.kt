@@ -36,8 +36,11 @@ const val CARD_OFFSET = 105f
 
 @Composable
 fun PillsScreen(viewModel: PillsViewModel) {
-    //EmptyPillsScreen()
-    PillsList(viewModel)
+    val pillsToTake by viewModel.pillsToTakeData.collectAsState()
+    val movedPills by viewModel.movedPillsToTakeData.collectAsState()
+
+    if (pillsToTake.isEmpty()) EmptyPillsScreen()
+    else PillsList(viewModel, pillsToTake, movedPills)
 }
 
 @Composable
@@ -59,10 +62,11 @@ fun EmptyPillsScreen() {
 }
 
 @Composable
-fun PillsList(viewModel: PillsViewModel) {
-    val pillsToTake by viewModel.pillsToTakeData.collectAsState()
-    val movedPills by viewModel.movedPillsToTakeData.collectAsState()
-
+fun PillsList(
+    viewModel: PillsViewModel,
+    pillsToTake: List<PillToTake>,
+    movedPills: List<Pair<Int, RevealStatus>>
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -98,18 +102,20 @@ fun PillsList(viewModel: PillsViewModel) {
                             R.string.accepted,
                             Modifier
                                 .width(106.dp)
-                                .padding(start = 17.dp, end = 12.dp, top = 16.dp),
-                            ButtonGreen
-                        ) {}
+                                .padding(start = 17.dp, end = 12.dp, top = 16.dp)
+                                .clickable { viewModel.acceptPill(it) },
+                            ButtonGreen,
+                        )
                         PillsButton(
                             R.drawable.xmark,
                             R.string.i_forgot,
                             Modifier
                                 .width(88.dp)
                                 .padding(start = 12.dp, end = 17.dp, top = 16.dp)
-                                .align(alignment = Alignment.TopEnd),
+                                .align(alignment = Alignment.TopEnd)
+                                .clickable { viewModel.forgotPill(it) },
                             LightRed
-                        ) {}
+                        )
                         PillsCard(
                             pillToTake = it,
                             revealStatus = movedPills.firstOrNull { lookItem -> lookItem.first == it.id }?.second
@@ -188,13 +194,11 @@ fun PillsButton(
     @DrawableRes icon: Int,
     @StringRes caption: Int,
     modifier: Modifier,
-    color: Color,
-    onClick: () -> Unit
+    color: Color
 ) {
     Box(
         modifier = modifier
             .height(100.dp)
-            .clickable { onClick }
             .clip(RoundedCornerShape(20.dp))
             .background(color = color)
     ) {

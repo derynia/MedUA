@@ -57,4 +57,13 @@ class PillsViewModel @Inject constructor(
         }
     }
 
+    fun acceptPill(pillToTake: PillToTake) {
+        pillToTake.taken = true
+        onCollapsed(pillToTake)
+    }
+
+    fun forgotPill(pillToTake: PillToTake) {
+        pillToTake.taken = false
+        onCollapsed(pillToTake)
+    }
 }
