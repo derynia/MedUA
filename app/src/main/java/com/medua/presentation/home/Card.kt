@@ -7,9 +7,7 @@ import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -30,7 +28,6 @@ import com.medua.ui.theme.TextGrey
 import kotlin.math.roundToInt
 
 const val ANIMATION_DURATION = 500
-const val MIN_DRAG_AMOUNT = 6
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,7 +90,7 @@ fun PillsCard(
 ) {
     val transitionState = remember {
         MutableTransitionState(revealStatus).apply {
-            targetState = RevealStatus.Right
+            targetState = RevealStatus.None
         }
     }
     val transition = updateTransition(transitionState, "cardTransition")
@@ -102,13 +99,14 @@ fun PillsCard(
         label = "cardOffsetTransition",
         transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
         targetValueByState = {
-            when (it) {
+            when (revealStatus) {
                 RevealStatus.Right -> cardOffset
                 RevealStatus.Left -> -cardOffset
                 else -> 0f
             }
         }
     )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,11 +114,15 @@ fun PillsCard(
             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .offset { IntOffset(offsetTransition.roundToInt(), 0) }
             .pointerInput(Unit) {
-                detectHorizontalDragGestures { _, dragAmount ->
+                var wasStatus = revealStatus
+                detectHorizontalDragGestures(onDragStart = {
+                    wasStatus = pillToTake.revealStatus
+                }) { _, dragAmount ->
                     when {
-                        dragAmount >= MIN_DRAG_AMOUNT -> onMoveRight()
-                        -dragAmount >= MIN_DRAG_AMOUNT -> onMoveLeft()
-                        dragAmount < -MIN_DRAG_AMOUNT -> onCollapsed()
+                        dragAmount >= 0 && wasStatus == RevealStatus.Left -> onCollapsed()
+                        dragAmount >= 0 -> onMoveRight()
+                        -dragAmount >= 0 && wasStatus == RevealStatus.Right -> onCollapsed()
+                        -dragAmount >= 0 -> onMoveLeft()
                     }
                 }
             },

@@ -10,7 +10,7 @@ data class PillToTake(
 )
 
 //Test
-val mockList = listOf<PillToTake>(
+val mockList = listOf(
     PillToTake(1, PillType("Aspirin"), 3, 1f, true, RevealStatus.None),
     PillToTake(2, PillType("Ceftriaxon"), 2, 1.5f, false, RevealStatus.None),
     PillToTake(3, PillType("Dexametazone"), 1, 2f, true, RevealStatus.None),
