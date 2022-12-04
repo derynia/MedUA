@@ -10,19 +10,17 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.medua.R
 import com.medua.data.PillToTake
 import com.medua.data.RevealStatus
 import com.medua.presentation.navigation.HomeScreenMenu
-import com.medua.ui.theme.Green
-import com.medua.ui.theme.LightRed
 import com.medua.ui.theme.PillsTextStyle
 import com.medua.ui.theme.TextGrey
 import kotlin.math.roundToInt
@@ -84,6 +82,7 @@ fun PillsCard(
     pillToTake: PillToTake,
     revealStatus: RevealStatus,
     cardOffset: Float,
+    cardOffsetEnd: Float,
     onMoveLeft: () -> Unit,
     onMoveRight: () -> Unit,
     onCollapsed: () -> Unit
@@ -101,7 +100,7 @@ fun PillsCard(
         targetValueByState = {
             when (revealStatus) {
                 RevealStatus.Right -> cardOffset
-                RevealStatus.Left -> -cardOffset
+                RevealStatus.Left -> -cardOffsetEnd
                 else -> 0f
             }
         }
@@ -110,7 +109,7 @@ fun PillsCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(116.dp)
+            .height(120.dp)
             .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .offset { IntOffset(offsetTransition.roundToInt(), 0) }
             .pointerInput(Unit) {
@@ -129,49 +128,87 @@ fun PillsCard(
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondary)
     ) {
-        Text(
-            text = pillToTake.pillType.name,
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .padding(top = 8.dp, start = 16.dp)
-                .height(22.dp)
-        )
-        Text(
-            text = "${pillToTake.timesADay} ${stringResource(id = R.string.times)}",
-            style = PillsTextStyle,
-            modifier = Modifier
-                .padding(top = 2.dp, start = 16.dp)
-                .height(20.dp)
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(top = 16.dp, start = 16.dp, bottom = 8.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .width(24.dp)
-                    .fillMaxHeight()
-                    .clip(RoundedCornerShape(6.dp))
-                    .background(if (pillToTake.taken) Green else LightRed),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    modifier = Modifier.padding(6.dp),
-                    painter = painterResource(id = if (pillToTake.taken) R.drawable.checkmark else R.drawable.xmark),
-                    contentDescription = stringResource(R.string.checkmark)
-                )
-            }
-            Text(
-                text = stringResource(id = if (pillToTake.taken) R.string.already_accepted else R.string.forgot_to_accept),
-                style = PillsTextStyle,
-                color = TextGrey,
-                modifier = Modifier.padding(start = 11.dp)
+        Row {
+            Icon(
+                painter = painterResource(id = R.drawable.cardedge),
+                contentDescription = stringResource(
+                    id = R.string.card_edge
+                ),
+                tint = Color.Unspecified
             )
+            Column(
+                modifier = Modifier
+                    .padding(start = 22.dp)
+            ) {
+                Text(
+                    text = pillToTake.pillType.name,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .padding(top = 2.dp)
+                        .height(22.dp)
+                )
+                //TODO time / times depend on qty
+                Text(
+                    text = "${pillToTake.timesADay} ${stringResource(id = R.string.times)}",
+                    style = PillsTextStyle,
+                    modifier = Modifier
+                        .padding(top = 2.dp)
+                        .height(20.dp)
+                )
+                Row(modifier = Modifier.height(22.dp)) {
+                    Text(
+                        text = pillToTake.pillType.category.name,
+                        style = MaterialTheme.typography.bodyMedium.copy(fontSize = 15.sp),
+                        color = TextGrey,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
+            }
         }
+//        Text(
+//            text = pillToTake.pillType.name,
+//            style = MaterialTheme.typography.titleMedium,
+//            color = MaterialTheme.colorScheme.primary,
+//            modifier = Modifier
+//                .padding(top = 8.dp, start = 16.dp)
+//                .height(22.dp)
+//        )
+//        Text(
+//            text = "${pillToTake.timesADay} ${stringResource(id = R.string.times)}",
+//            style = PillsTextStyle,
+//            modifier = Modifier
+//                .padding(top = 2.dp, start = 16.dp)
+//                .height(20.dp)
+//        )
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .fillMaxHeight()
+//                .padding(top = 16.dp, start = 16.dp, bottom = 8.dp),
+//            horizontalArrangement = Arrangement.Start,
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            Box(
+//                modifier = Modifier
+//                    .width(24.dp)
+//                    .fillMaxHeight()
+//                    .clip(RoundedCornerShape(6.dp))
+//                    .background(if (pillToTake.taken) Green else LightRed),
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Icon(
+//                    modifier = Modifier.padding(6.dp),
+//                    painter = painterResource(id = if (pillToTake.taken) R.drawable.checkmark else R.drawable.xmark),
+//                    contentDescription = stringResource(R.string.checkmark)
+//                )
+//            }
+//            Text(
+//                text = stringResource(id = if (pillToTake.taken) R.string.already_accepted else R.string.forgot_to_accept),
+//                style = PillsTextStyle,
+//                color = TextGrey,
+//                modifier = Modifier.padding(start = 11.dp)
+//            )
+//        }
     }
 }

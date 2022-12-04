@@ -25,7 +25,7 @@ val Typography = Typography(
     ),
     titleMedium = TextStyle(
         fontFamily = SfProFont,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Normal,
         fontSize = 17.sp,
         lineHeight = 22.sp,
         letterSpacing = 0.sp
@@ -60,7 +60,6 @@ val Typography = Typography(
     )
 )
 
-
 val OopsStyle = TextStyle(
     fontFamily = SfProFont,
     fontWeight = FontWeight.Bold,
@@ -79,6 +78,5 @@ val PillsTextStyle = TextStyle(
     fontFamily = SfProFont,
     fontWeight = FontWeight.Normal,
     fontSize = 15.sp,
-    lineHeight = 20.sp,
     color = Color.Black
 )

@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.Color
 val Main = Color(0xFFF2F2F7)
 val Blue = Color(0xFF3D9AFF)
 val White = Color(0xFFFFFFFF)
-val Pink80 = Color(0xFFEFB8C8)
 val Pink = Color(0xFFF9E6FF)
 val LightGreen = Color(0xFF92E3A9)
 val ButtonGreen = Color(0xFF8ADB8D)
@@ -18,5 +17,7 @@ val SearchGrey = Color(0x1F767680)
 val FilterTextColor = Color(0x998E8E93)
 val Green = Color(0xFF92E3A9)
 val LightRed = Color(0xFFED6262)
+val Orange = Color(0xFFFFB905)
+
 
 val Pink40 = Color(0xFF7D5260)

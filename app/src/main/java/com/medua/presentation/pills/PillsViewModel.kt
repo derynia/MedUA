@@ -36,7 +36,8 @@ class PillsViewModel @Inject constructor(
     }
 
     fun onItemMoved(pillToTake: PillToTake, revealStatus: RevealStatus) {
-        val item = movedPillsToTake.value.firstOrNull { lookItem -> lookItem.first == pillToTake.id }
+        val item =
+            movedPillsToTake.value.firstOrNull { lookItem -> lookItem.first == pillToTake.id }
         if (item != null && item.second == revealStatus) return
 
         movedPillsToTake.value = movedPillsToTake.value.toMutableList().also { list ->
@@ -49,8 +50,9 @@ class PillsViewModel @Inject constructor(
     }
 
     fun onCollapsed(pillToTake: PillToTake) {
-        val item = movedPillsToTake.value.firstOrNull { lookItem -> lookItem.first == pillToTake.id }
-            ?: return
+        val item =
+            movedPillsToTake.value.firstOrNull { lookItem -> lookItem.first == pillToTake.id }
+                ?: return
         movedPillsToTake.value = movedPillsToTake.value.toMutableList().also { list ->
             list.remove(item)
             pillToTake.revealStatus = RevealStatus.None
@@ -65,5 +67,17 @@ class PillsViewModel @Inject constructor(
     fun forgotPill(pillToTake: PillToTake) {
         pillToTake.taken = false
         onCollapsed(pillToTake)
+    }
+
+    fun filterByTakeTime(index: Int) {
+        viewModelScope.launch {
+            withContext(Dispatchers.Default) {
+                val filteredList = mockList.filter { it.timesADay == index + 1 }
+                movedPillsToTake.value = movedPillsToTake.value.toMutableList().also {
+                    it.clear()
+                }
+                pillsToTake.emit(filteredList)
+            }
+        }
     }
 }

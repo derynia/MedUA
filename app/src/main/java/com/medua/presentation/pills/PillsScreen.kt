@@ -22,17 +22,16 @@ import androidx.compose.ui.unit.sp
 import com.medua.R
 import com.medua.data.PillToTake
 import com.medua.data.RevealStatus
+import com.medua.presentation.basic.BasicButton
 import com.medua.presentation.basic.OopsBox
 import com.medua.presentation.basic.SearchField
 import com.medua.presentation.basic.TitleText
 import com.medua.presentation.home.PillsCard
-import com.medua.ui.theme.ButtonGreen
-import com.medua.ui.theme.FilterTextColor
-import com.medua.ui.theme.LightRed
-import com.medua.ui.theme.White
+import com.medua.ui.theme.*
 import com.medua.utils.dp
 
-const val CARD_OFFSET = 105f
+const val CARD_OFFSET = 90f
+const val CARD_OFFSET_END = 75f
 
 @Composable
 fun PillsScreen(viewModel: PillsViewModel) {
@@ -78,7 +77,7 @@ fun PillsList(
             Spacer(modifier = Modifier.weight(3f))
             TitleText(title = R.string.pills, Modifier.weight(6f))
             Text(
-                text = stringResource(id = R.string.drink_it_all),
+                text = stringResource(id = R.string.plus_sign),
                 textAlign = TextAlign.End,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.primary,
@@ -93,10 +92,14 @@ fun PillsList(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            FilterTabs()
-            LazyColumn {
+            FilterTabs(viewModel)
+            LazyColumn(modifier = Modifier.weight(1f)) {
                 items(pillsToTake, PillToTake::id) {
-                    Box(Modifier.fillMaxWidth()) {
+                    Box(
+                        Modifier
+                            .fillMaxWidth()
+                            .height(94.dp)
+                    ) {
                         PillsButton(
                             R.drawable.checkmark,
                             R.string.accepted,
@@ -110,17 +113,18 @@ fun PillsList(
                             R.drawable.xmark,
                             R.string.i_forgot,
                             Modifier
-                                .width(88.dp)
+                                .width(95.dp)
                                 .padding(start = 12.dp, end = 17.dp, top = 16.dp)
                                 .align(alignment = Alignment.TopEnd)
                                 .clickable { viewModel.forgotPill(it) },
-                            LightRed
+                            Orange
                         )
                         PillsCard(
                             pillToTake = it,
                             revealStatus = movedPills.firstOrNull { lookItem -> lookItem.first == it.id }?.second
                                 ?: RevealStatus.None,
                             cardOffset = CARD_OFFSET.dp(),
+                            cardOffsetEnd = CARD_OFFSET_END.dp(),
                             onMoveLeft = { viewModel.onItemMoved(it, RevealStatus.Left) },
                             onMoveRight = { viewModel.onItemMoved(it, RevealStatus.Right) },
                             onCollapsed = { viewModel.onCollapsed(it) }
@@ -128,12 +132,18 @@ fun PillsList(
                     }
                 }
             }
+            BasicButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 44.dp, bottom = 20.dp),
+                caption = R.string.take_it_all
+            ) {}
         }
     }
 }
 
 @Composable
-fun FilterTabs() {
+fun FilterTabs(viewModel: PillsViewModel) {
     var tabIndex by remember { mutableStateOf(0) }
 
     val tabData = listOf(
@@ -162,7 +172,10 @@ fun FilterTabs() {
 
             Tab(
                 selected = selected,
-                onClick = { tabIndex = index },
+                onClick = {
+                    tabIndex = index
+                    viewModel.filterByTakeTime(index)
+                },
             ) {
                 Column(
                     Modifier.fillMaxWidth(),
@@ -198,7 +211,7 @@ fun PillsButton(
 ) {
     Box(
         modifier = modifier
-            .height(100.dp)
+            .height(94.dp)
             .clip(RoundedCornerShape(20.dp))
             .background(color = color)
     ) {
@@ -211,7 +224,7 @@ fun PillsButton(
         ) {
             Icon(
                 painter = painterResource(id = icon),
-                modifier = Modifier.padding(top = 26.dp),
+                modifier = Modifier.padding(top = 20.dp),
                 contentDescription = stringResource(id = caption),
                 tint = Color.Unspecified
             )
@@ -219,11 +232,11 @@ fun PillsButton(
                 text = stringResource(id = caption),
                 color = White,
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(top = 12.dp)
                     .fillMaxWidth(),
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Center,
-                fontSize = 17.sp,
+                fontSize = 16.sp,
                 lineHeight = 22.sp,
                 maxLines = 1
             )
